@@ -37,6 +37,18 @@ pnpm format:check
 pnpm build
 ```
 
+## Insights section (visitor stats)
+
+Powered by [GoatCounter](https://www.goatcounter.com) (free for personal sites). Create an account, pick a code (`<code>.goatcounter.com`), and add an API token with **Read statistics**. Then set in `.env.local` / Vercel:
+
+```
+NEXT_PUBLIC_GOATCOUNTER_CODE=<code>
+GOATCOUNTER_CODE=<code>
+GOATCOUNTER_API_TOKEN=<token>
+```
+
+The section stays hidden until all three are set. Use `INSIGHTS_MOCK=true` in dev to preview it with fake data.
+
 ## Routes
 
 - `/` — the portfolio

@@ -139,6 +139,14 @@ export default function RootLayout({
         </Providers>
         {/* Vercel Web Analytics — no-op outside Vercel deployments. */}
         <Analytics />
+        {/* GoatCounter — feeds the Insights section on the home page. Skips localhost by itself. */}
+        {process.env.NEXT_PUBLIC_GOATCOUNTER_CODE && (
+          <Script
+            src="https://gc.zgo.at/count.js"
+            data-goatcounter={`https://${process.env.NEXT_PUBLIC_GOATCOUNTER_CODE}.goatcounter.com/count`}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   )
