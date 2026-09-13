@@ -1,0 +1,23 @@
+{
+  "short_name": "Gamandeep",
+  "name": "Gamandeep Singh",
+  "description": "Full Stack Developer building scalable, real-time systems and Web3 applications on Solana.",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/avatar.png",
+      "type": "image/png",
+      "sizes": "500x500",
+      "purpose": "any"
+    }
+  ],
+  "id": "/?utm_source=pwa",
+  "start_url": "/?utm_source=pwa",
+  "display": "standalone",
+  "scope": "/"
+}
