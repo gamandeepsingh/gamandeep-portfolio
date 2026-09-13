@@ -29,6 +29,7 @@ export const PROJECTS: Project[] = [
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1774967021/1_mwuzob.png",
     isExpanded: true,
+    logo: "https://res.cloudinary.com/dib0peewu/image/upload/v1789307559/solai-logo_h6i2ws.webp"
   },
   {
     id: "solana-indexer",
@@ -42,6 +43,7 @@ export const PROJECTS: Project[] = [
     description: `High-performance blockchain data pipeline built in Rust that streams, processes, and stores Solana transactions at scale for analytics and monitoring. / Write-up: [Building a Real-Time Solana Indexer in Rust](https://medium.com/@gamandeepsingh4/building-a-real-time-solana-indexer-in-rust-a-complete-guide-edcf64119691)`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1775455635/solana-indexer-preview_a08kia.png",
+    logo: "https://imgs.search.brave.com/ZQzGg8VcFb0Pqmc8Q0ZWbf4EtJIxxuF7peNRe0rMmR4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4z/ZC5pY29uc2NvdXQu/Y29tLzNkL3ByZW1p/dW0vdGh1bWIvc29s/YW5hLWNvaW4tM2Qt/aWNvbi1wbmctZG93/bmxvYWQtMTAwNDM1/OTMucG5n" 
   },
   {
     id: "quickcache",
@@ -55,6 +57,7 @@ export const PROJECTS: Project[] = [
     description: `Open-source Rust crate: an in-memory cache with TTL-based expiration and LRU eviction. Designed for simplicity, speed, and zero dependencies — ideal for small to medium backend systems.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1774966971/ChatGPT_Image_Mar_31_2026_07_52_37_PM_jtusga.png",
+    logo: "https://imgs.search.brave.com/YBCkjGzBad_zU_6Scc7_zSQcYytQ53go-AcpH60lOQ0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/aWNvbnNjb3V0LmNv/bS9pY29uL3ByZW1p/dW0vcG5nLTI1Ni10/aHVtYi9oaXN0b3J5/LWljb24tc3ZnLWRv/d25sb2FkLXBuZy04/Mjg4NjQyLnBuZz9m/PXdlYnAmdz0xMjg"
   },
   {
     id: "solana-pay-widget",
@@ -72,7 +75,7 @@ export const PROJECTS: Project[] = [
     id: "gpunet",
     title: "GPU.Net — Decentralized CPU/GPU Sharing",
     period: { start: "2025", end: "2025" },
-    link: "https://gpu.net/enterprise",
+    link: "https://world.gpu.net",
     github: "http://github.com/brahmGAN",
     status: "Completed",
     categories: ["web3", "web"],
@@ -80,6 +83,7 @@ export const PROJECTS: Project[] = [
     description: `Decentralized cloud computing platform enabling users to share and monetize idle CPU/GPU resources. Built with React, Hono, Next.js, TypeScript, Web3, and Ethereum.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1771412911/Screenshot_2026-02-18_at_4.38.23_PM_r5eid5.png",
+    logo: "https://unavatar.io/x/gpunet"
   },
   {
     id: "excalidraw",
@@ -93,6 +97,7 @@ export const PROJECTS: Project[] = [
     description: `Collaborative whiteboard where users create and share drawings in real time, with a Rust WebSocket backend.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1772916493/Screenshot_2026-03-08_at_2.17.28_AM_mtwgke.png",
+    logo: "https://excalidraw.gamandeep.xyz/rustxex.png"  
   },
   {
     id: "superteam-builder",
@@ -106,6 +111,7 @@ export const PROJECTS: Project[] = [
     description: `All Superteam builder profiles in one place — a centralized hub to discover and connect with top Web3 talent.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1774971295/Screenshot_2026-03-31_at_9.04.44_PM_akmb58.png",
+    logo: "https://pbs.twimg.com/profile_images/2090359059686002688/IPshdO77_400x400.png"
   },
   {
     id: "credible",
@@ -118,6 +124,7 @@ export const PROJECTS: Project[] = [
     description: `The first stablecoin pay-later protocol — bringing on-chain credit to consumers and institutions for fast, borderless payments. / [@crediblefin](https://x.com/crediblefin)`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1771413195/Screenshot_2026-02-18_at_4.43.10_PM_v2cwsb.png",
+    logo: "https://unavatar.io/x/crediblefin"
   },
   {
     id: "decharge",
@@ -130,6 +137,7 @@ export const PROJECTS: Project[] = [
     description: `EV charging platform with user-friendly interfaces for locating and reserving charging stations, with on-chain payments. / [@decharge](https://x.com/decharge)`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1767386715/Screenshot_2026-01-03_021456_xsmfgc.png",
+    logo: "https://pbs.twimg.com/profile_images/2005992492207140864/aRpbC3dd_400x400.jpg"
   },
   {
     id: "myvibe",
@@ -142,6 +150,7 @@ export const PROJECTS: Project[] = [
     description: `Personal playground site with cool animations and interactions.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1771701998/Screenshot_2026-02-22_at_12.56.29_AM_muvbsj.png",
+    logo: "/images/avatar.png"
   },
   {
     id: "findyourvibe",
@@ -161,6 +170,7 @@ export const PROJECTS: Project[] = [
     description: `MEAN-stack (microservice) event platform with Razorpay integration for ticket purchases and a real-time dashboard to track sales and user activity.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1746825827/Screenshot_2025-05-10_025321_dvhaqv.png",
+    logo: "https://pub-8bcac0015ba2424f9b16f3be0f11365f.r2.dev/brand/android-chrome-512.png"
   },
   {
     id: "storenv",
@@ -186,6 +196,7 @@ export const PROJECTS: Project[] = [
     description: `Custom React component library to streamline UI development with beautiful, consistent components.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1746825946/Screenshot_2025-05-10_025532_qbqmgd.png",
+    logo: "https://res.cloudinary.com/dib0peewu/image/upload/v1725112664/Screenshot_from_2024-08-31_19-23-09-removebg-preview_emtywq.png"
   },
   {
     id: "vayu",
@@ -251,6 +262,7 @@ export const PROJECTS: Project[] = [
     description: `Payroll management tool with automated salary disbursement and tax calculations, integrated with Razorpay.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1740937728/Screenshot_2025-03-02_231839_wljvf5.png",
+    logo: "https://res.cloudinary.com/dib0peewu/image/upload/v1735144960/PB_drvh7u.png"
   },
   {
     id: "pristine-mvp",
@@ -263,6 +275,7 @@ export const PROJECTS: Project[] = [
     description: `Modern animated landing page with smooth animations and interactions.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1732798544/ryrynggdgbcag3nokkh0.png",
+    logo: "https://res.cloudinary.com/dib0peewu/image/upload/v1725112664/Screenshot_from_2024-08-31_19-23-09-removebg-preview_emtywq.png"
   },
   {
     id: "payzoll-clone",
@@ -287,6 +300,7 @@ export const PROJECTS: Project[] = [
     description: `Official website for the INNOGEEKS technical community with event listings and member management.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1721902018/Screenshot_from_2024-07-25_15-36-27_c1z2rf.png",
+    logo: "https://www.innogeeks.in/newIcon.png"
   },
   {
     id: "assets-roster",
@@ -299,6 +313,7 @@ export const PROJECTS: Project[] = [
     description: `Asset management and organization platform with CMS integration.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1732810856/qtasvipme3hgih7psdwq.png",
+    logo: "https://res.cloudinary.com/dib0peewu/image/upload/v1721653645/Frame_19_w10jqu.png"
   },
   {
     id: "saimlds",
@@ -311,6 +326,7 @@ export const PROJECTS: Project[] = [
     description: `Official website for the SAIMLDS community organization, built with the MERN stack.`,
     image:
       "https://res.cloudinary.com/dib0peewu/image/upload/v1721902176/Screenshot_from_2024-07-25_15-39-22_vhiera.png",
+    logo: "https://res.cloudinary.com/dib0peewu/image/upload/v1718683268/logo_ntf0z7.png"
   },
   {
     id: "ai-video-generator",
