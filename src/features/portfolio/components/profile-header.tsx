@@ -18,7 +18,9 @@ export function ProfileHeader() {
           <span className="ml-1 -rotate-6">
             it watches you
             <span className="block" />
-            click to boo
+            double-click = love
+            <span className="block" />
+            spam-click = dizzy
           </span>
         </HandwrittenNote>
 
