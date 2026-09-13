@@ -50,13 +50,35 @@ export type InsightsResponse = {
 const RANGE_DAYS = 30
 const DAY_MS = 24 * 60 * 60 * 1000
 
+type Range = { start: number; end: number }
+
+/** Start of the current UTC day, matching the day keys written by `/api/insights/hit`. */
+function startOfTodayUtc(): number {
+  const now = new Date()
+  return Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+}
+
+/**
+ * The 30-day window ending *today inclusive*, plus the 30 days before it.
+ * Both are expressed as day-aligned timestamps so `listDates` produces the
+ * exact keys the counter writes; an exclusive `Date.now()` end would drop the
+ * current day, which is where all the newest data lives.
+ */
+function getWindows(): { current: Range; previous: Range } {
+  const today = startOfTodayUtc()
+  const end = today + DAY_MS // exclusive
+  const start = end - RANGE_DAYS * DAY_MS
+  return {
+    current: { start, end },
+    previous: { start: start - RANGE_DAYS * DAY_MS, end: start },
+  }
+}
+
 /**
  * Visitors are counted first-party: `/api/insights/hit` records one unique
  * visitor per UTC day in Redis (see `src/lib/redis.ts` for the key layout),
  * so every number here is a daily-unique visitor count.
  */
-type Range = { start: number; end: number }
-
 function toDateParam(time: number): ISODateString {
   return new Date(time).toISOString().slice(0, 10)
 }
@@ -169,42 +191,39 @@ function getMockInsights(): InsightsResponse {
   }
 }
 
-const getCachedInsights = unstable_cache(
-  async (): Promise<InsightsResponse | null> => {
-    const end = Date.now()
-    const start = end - RANGE_DAYS * DAY_MS
-    const current: Range = { start, end }
-    const previous: Range = { start: start - RANGE_DAYS * DAY_MS, end: start }
+async function fetchInsights(): Promise<InsightsResponse | null> {
+  const { current, previous } = getWindows()
 
-    const [series, previousSeries, total] = await Promise.all([
-      fetchSeries(current),
-      fetchSeries(previous),
-      fetchTotal(),
-    ])
+  const [series, previousSeries, total] = await Promise.all([
+    fetchSeries(current),
+    fetchSeries(previous),
+    fetchTotal(),
+  ])
 
-    if (series === null) {
-      return null
-    }
+  if (series === null) {
+    return null
+  }
 
-    const currentSummary = summarize(series)
-    const previousSummary = previousSeries ? summarize(previousSeries) : null
+  const currentSummary = summarize(series)
+  const previousSummary = previousSeries ? summarize(previousSeries) : null
 
-    return {
-      startDate: toDateParam(start),
-      endDate: toDateParam(end),
-      summary: {
-        // Fall back to the window when the total read fails, rather than
-        // showing a total smaller than the last 30 days.
-        total_visitors: Math.max(total ?? 0, currentSummary.period_visitors),
-        ...currentSummary,
-      },
-      series,
-      changes: getChanges(currentSummary, previousSummary),
-    }
-  },
-  ["redis-insights"],
-  { revalidate: 600 } // 10 minutes
-)
+  return {
+    startDate: series[0]?.date ?? toDateParam(current.start),
+    endDate: series.at(-1)?.date ?? toDateParam(current.end - DAY_MS),
+    summary: {
+      // Fall back to the window when the total read fails, rather than
+      // showing a total smaller than the last 30 days.
+      total_visitors: Math.max(total ?? 0, currentSummary.period_visitors),
+      ...currentSummary,
+    },
+    series,
+    changes: getChanges(currentSummary, previousSummary),
+  }
+}
+
+const getCachedInsights = unstable_cache(fetchInsights, ["redis-insights"], {
+  revalidate: 600, // 10 minutes
+})
 
 export async function getInsights(): Promise<InsightsResponse | null> {
   // Checked outside the cache so a mock run never persists into `.next/cache`.
@@ -219,6 +238,12 @@ export async function getInsights(): Promise<InsightsResponse | null> {
   // effect on the next request instead of after the cache expires.
   if (!process.env.REDIS_URL) {
     return null
+  }
+
+  // Redis reads are cheap; in dev, always show live counts instead of a
+  // 10-minute-old snapshot so a fresh hit is visible on the next reload.
+  if (process.env.NODE_ENV === "development") {
+    return fetchInsights()
   }
 
   return getCachedInsights()
