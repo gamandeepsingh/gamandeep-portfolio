@@ -116,6 +116,8 @@ export interface ChartContextValue {
   enterTransition?: Transition
   /** Increments when enter animation should replay. */
   revealEpoch?: number
+  /** False while the chart is below the fold; the enter animation waits for it. */
+  inView?: boolean
 
   // X accessor - how to get the x value from data points
   xAccessor: (d: Record<string, unknown>) => Date

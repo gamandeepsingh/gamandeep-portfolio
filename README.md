@@ -39,7 +39,7 @@ pnpm build
 
 ## Insights section (page views)
 
-Counted first-party in Redis — no third-party script, no cookies, nothing stored about the visitor. Every page load or refresh pings `POST /api/insights/hit`, which adds one to that UTC day's bucket (`insights:views:<date>`) and to the running total (`insights:views:total`). Set in `.env.local` / Vercel:
+Counted first-party in Redis — no third-party script, no cookies, nothing stored about the visitor. Every page load or refresh pings `POST /api/insights/hit`, which adds one to that day's bucket (days roll over at midnight in Asia/Kolkata) (`insights:views:<date>`) and to the running total (`insights:views:total`). Set in `.env.local` / Vercel:
 
 ```
 REDIS_URL=redis://default:<password>@<host>:<port>

@@ -50,6 +50,7 @@ export function Line({
     isLoaded,
     enterTransition,
     revealEpoch,
+    inView = true,
     xAccessor,
   } = useChart()
 
@@ -202,6 +203,7 @@ export function Line({
             clipPathId={`grow-clip-${dataKey}`}
             enterTransition={enterTransition}
             height={innerHeight + 20}
+            play={inView}
             revealEpoch={revealEpoch ?? 0}
             targetWidth={innerWidth}
           />

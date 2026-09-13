@@ -3,6 +3,7 @@ import { TrendingDownIcon, TrendingUpIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
+import { CountUp } from "@/components/count-up"
 import type {
   InsightsChanges,
   InsightsSummary,
@@ -26,7 +27,9 @@ export function InsightsMetrics({
       <dl className="grid grid-cols-2 md:grid-cols-4">
         <Metric>
           <MetricLabel>Total views</MetricLabel>
-          <MetricValue>{formatNumber(summary.total_views)}</MetricValue>
+          <MetricValue>
+            <CountUp value={summary.total_views} />
+          </MetricValue>
         </Metric>
 
         <Metric>
@@ -34,7 +37,9 @@ export function InsightsMetrics({
             Last 30 days
             <MetricChange value={changes.period_views} />
           </MetricLabel>
-          <MetricValue>{formatNumber(summary.period_views)}</MetricValue>
+          <MetricValue>
+            <CountUp value={summary.period_views} />
+          </MetricValue>
         </Metric>
 
         <Metric>
@@ -43,7 +48,7 @@ export function InsightsMetrics({
             <MetricChange value={changes.daily_average} />
           </MetricLabel>
           <MetricValue>
-            {formatNumber(Math.round(summary.daily_average * 10) / 10)}
+            <CountUp value={summary.daily_average} decimals={1} />
           </MetricValue>
         </Metric>
 
@@ -52,7 +57,9 @@ export function InsightsMetrics({
             Best day
             <MetricChange value={changes.best_day} />
           </MetricLabel>
-          <MetricValue>{formatNumber(summary.best_day)}</MetricValue>
+          <MetricValue>
+            <CountUp value={summary.best_day} />
+          </MetricValue>
         </Metric>
       </dl>
     </div>

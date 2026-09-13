@@ -50,6 +50,8 @@ export interface TimeSeriesChartInnerProps {
   enterTransition?: Transition
   /** Signature of motion URL state — triggers reveal replay when it changes. */
   revealSignature?: string
+  /** Defer the enter animation until the chart is on screen. Default: true (play immediately). */
+  inView?: boolean
   children: ReactNode
   containerRef: React.RefObject<HTMLDivElement | null>
   /** Series keys driving y-domain and tooltip (Line / Area / SeriesBar configs). */
@@ -78,6 +80,7 @@ export function TimeSeriesChartInner({
   animationEasing = DEFAULT_ANIMATION_EASING,
   enterTransition,
   revealSignature = "",
+  inView = true,
   children,
   containerRef,
   lines,
@@ -165,6 +168,9 @@ export function TimeSeriesChartInner({
   )
 
   useEffect(() => {
+    // Nothing to reveal yet; the clip stays closed and hover stays locked.
+    if (!inView) return
+
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setRevealEpoch((n) => n + 1)
     setIsLoaded(false)
@@ -172,7 +178,7 @@ export function TimeSeriesChartInner({
       setIsLoaded(true)
     }, animationDuration)
     return () => clearTimeout(timer)
-  }, [animationDuration, revealSignature])
+  }, [animationDuration, revealSignature, inView])
 
   const canInteract = isLoaded
 
@@ -238,6 +244,7 @@ export function TimeSeriesChartInner({
     animationEasing,
     enterTransition,
     revealEpoch,
+    inView,
     xAccessor,
     dateLabels,
     selection,

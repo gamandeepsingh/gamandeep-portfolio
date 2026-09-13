@@ -2,6 +2,7 @@ import "server-only"
 
 import { unstable_cache } from "next/cache"
 
+import { listDayKeys } from "@/lib/insights-days"
 import { getRedis, INSIGHTS_KEYS } from "@/lib/redis"
 
 type ISODateString = string
@@ -48,60 +49,26 @@ export type InsightsResponse = {
 
 /** Days plotted on the chart; the previous cycle is the same length before it. */
 const RANGE_DAYS = 30
-const DAY_MS = 24 * 60 * 60 * 1000
-
-type Range = { start: number; end: number }
-
-/** Start of the current UTC day, matching the day keys written by `/api/insights/hit`. */
-function startOfTodayUtc(): number {
-  const now = new Date()
-  return Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
-}
 
 /**
- * The 30-day window ending *today inclusive*, plus the 30 days before it.
- * Both are expressed as day-aligned timestamps so `listDates` produces the
- * exact keys the counter writes; an exclusive `Date.now()` end would drop the
- * current day, which is where all the newest data lives.
+ * Views are counted first-party: `/api/insights/hit` adds one to the day's
+ * bucket in Redis on every page load (days roll over at midnight in
+ * `INSIGHTS_TIME_ZONE`; see `src/lib/redis.ts` for the key layout), so every
+ * number here is a page-view count.
  */
-function getWindows(): { current: Range; previous: Range } {
-  const today = startOfTodayUtc()
-  const end = today + DAY_MS // exclusive
-  const start = end - RANGE_DAYS * DAY_MS
-  return {
-    current: { start, end },
-    previous: { start: start - RANGE_DAYS * DAY_MS, end: start },
-  }
-}
 
 /**
- * Views are counted first-party: `/api/insights/hit` adds one to the UTC day
- * bucket in Redis on every page load (see `src/lib/redis.ts` for the key
- * layout), so every number here is a page-view count.
+ * Reads every listed day in one round trip. Days without traffic have no
+ * key, so they come back as zero to keep the x-axis continuous.
  */
-function toDateParam(time: number): ISODateString {
-  return new Date(time).toISOString().slice(0, 10)
-}
-
-function listDates(range: Range): ISODateString[] {
-  const dates: ISODateString[] = []
-  for (let t = range.start; t < range.end; t += DAY_MS) {
-    dates.push(toDateParam(t))
-  }
-  return dates
-}
-
-/**
- * Reads every day in the range in one round trip. Days without traffic have
- * no key, so they come back as zero to keep the x-axis continuous.
- */
-async function fetchSeries(range: Range): Promise<InsightsSeriesItem[] | null> {
+async function fetchSeries(
+  dates: ISODateString[]
+): Promise<InsightsSeriesItem[] | null> {
   const redis = getRedis()
   if (!redis) {
     return null
   }
 
-  const dates = listDates(range)
   if (dates.length === 0) {
     return []
   }
@@ -166,23 +133,18 @@ function getChanges(
 
 /** Local-only stand-in so the section can be developed without credentials. */
 function getMockInsights(): InsightsResponse {
-  const end = Date.now()
-  const start = end - RANGE_DAYS * DAY_MS
-
-  const series: InsightsSeriesItem[] = []
-  for (let t = start; t < end; t += DAY_MS) {
-    const day = (t - start) / DAY_MS
-    series.push({
-      date: toDateParam(t),
+  const series: InsightsSeriesItem[] = listDayKeys(RANGE_DAYS).map(
+    (date, day) => ({
+      date,
       views: Math.round(18 + 12 * Math.sin(day / 3) + (day % 7 < 2 ? -6 : 4)),
     })
-  }
+  )
 
   const current = summarize(series)
 
   return {
-    startDate: toDateParam(start),
-    endDate: toDateParam(end),
+    startDate: series[0].date,
+    endDate: series[series.length - 1].date,
     summary: { total_views: 4_812, ...current },
     series,
     changes: { period_views: 12.4, daily_average: 12.4, best_day: -3.2 },
@@ -190,11 +152,10 @@ function getMockInsights(): InsightsResponse {
 }
 
 async function fetchInsights(): Promise<InsightsResponse | null> {
-  const { current, previous } = getWindows()
-
+  // The 30 days ending today (inclusive) and the 30 before them.
   const [series, previousSeries, total] = await Promise.all([
-    fetchSeries(current),
-    fetchSeries(previous),
+    fetchSeries(listDayKeys(RANGE_DAYS)),
+    fetchSeries(listDayKeys(RANGE_DAYS, RANGE_DAYS)),
     fetchTotal(),
   ])
 
@@ -206,8 +167,8 @@ async function fetchInsights(): Promise<InsightsResponse | null> {
   const previousSummary = previousSeries ? summarize(previousSeries) : null
 
   return {
-    startDate: series[0]?.date ?? toDateParam(current.start),
-    endDate: series.at(-1)?.date ?? toDateParam(current.end - DAY_MS),
+    startDate: series[0].date,
+    endDate: series[series.length - 1].date,
     summary: {
       // Fall back to the window when the total read fails, rather than
       // showing a total smaller than the last 30 days.

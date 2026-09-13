@@ -9,6 +9,7 @@ import {
 } from "react"
 import { ParentSize } from "@visx/responsive"
 import type { Transition } from "motion/react"
+import { useInView } from "motion/react"
 
 import { cn } from "@/lib/utils"
 
@@ -84,6 +85,7 @@ interface ChartInnerProps {
   animationEasing?: string
   enterTransition?: Transition
   revealSignature?: string
+  inView: boolean
   children: ReactNode
   containerRef: React.RefObject<HTMLDivElement | null>
 }
@@ -98,6 +100,7 @@ function ChartInner({
   animationEasing,
   enterTransition,
   revealSignature,
+  inView,
   children,
   containerRef,
 }: ChartInnerProps) {
@@ -112,6 +115,7 @@ function ChartInner({
       data={data}
       enterTransition={enterTransition}
       height={height}
+      inView={inView}
       lines={lines}
       margin={margin}
       revealSignature={revealSignature}
@@ -137,6 +141,8 @@ export function LineChart({
 }: LineChartProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const margin = { ...DEFAULT_MARGIN, ...marginProp }
+  // Play the reveal once, when a good chunk of the chart is actually on screen.
+  const inView = useInView(containerRef, { once: true, amount: 0.4 })
 
   return (
     <div
@@ -153,6 +159,7 @@ export function LineChart({
             data={data}
             enterTransition={enterTransition}
             height={height}
+            inView={inView}
             margin={margin}
             revealSignature={revealSignature}
             width={width}
