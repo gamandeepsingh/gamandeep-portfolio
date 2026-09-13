@@ -70,6 +70,7 @@ export const metadata: Metadata = {
         url: SITE_INFO.ogImage,
         width: 1200,
         height: 630,
+        type: "image/webp",
         alt: SITE_INFO.name,
       },
     ],

@@ -37,8 +37,7 @@ export const USER: User = {
 - Creator of [SOLAI Wallet](https://solai.website), [solana-pay-widget](https://www.npmjs.com/package/solana-pay-widget) (npm), and [QuickCache](https://crates.io/crates/quickcache) (Rust crate).
 `,
   avatar: "/images/avatar.png",
-  ogImage:
-    "/og/simple?title=Gamandeep%20Singh&description=Full%20Stack%20Developer%20%C2%B7%20Web3%20Developer",
+  ogImage: "/images/og.webp",
   resumeUrl:
     "https://drive.google.com/file/d/1zCZC-D79eKIy4BOGdzVE-kdfOT1SIb2s/view?usp=sharing",
   timeZone: "Asia/Kolkata",
