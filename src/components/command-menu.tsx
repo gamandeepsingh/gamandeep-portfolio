@@ -10,6 +10,7 @@ import {
   CrownIcon,
   DownloadIcon,
   FileTextIcon,
+  GitPullRequestIcon,
   GraduationCapIcon,
   LayersIcon,
   MonitorIcon,
@@ -103,6 +104,12 @@ const PORTFOLIO_LINKS: CommandLinkItem[] = [
     href: "/#education",
     kind: "page",
     icon: <GraduationCapIcon />,
+  },
+  {
+    title: "Open Source",
+    href: "/#contributions",
+    kind: "page",
+    icon: <GitPullRequestIcon />,
   },
   {
     title: "Awards",

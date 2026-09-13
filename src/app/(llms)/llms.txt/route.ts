@@ -10,6 +10,7 @@ const content = `# ${USER.displayName}
 - [Experience](${SITE_INFO.url}/experience.md): Highlights from my career and key roles I've taken on.
 - [Education](${SITE_INFO.url}/education.md): Where I studied, what I focused on, and what I built along the way.
 - [Projects](${SITE_INFO.url}/projects.md): Selected projects that show my skills and creativity.
+- [Open Source](${SITE_INFO.url}/contributions.md): Pull requests I've contributed to open-source projects.
 - [Awards](${SITE_INFO.url}/awards.md): My key awards and honors.
 - [Certifications](${SITE_INFO.url}/certifications.md): Certifications and credentials I've earned.
 

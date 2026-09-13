@@ -6,30 +6,34 @@ import { ChevronDownIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useClickSound } from "@/hooks/soundcn/use-click-sound"
 import { Button } from "@/components/base/ui/button"
-import type { ProjectCategory } from "@/features/portfolio/types/projects"
-
-type Filter = ProjectCategory | "all"
 
 /**
- * One row of the list. `node` is the server-rendered `ProjectItem`, passed
- * through as a ReactNode so this client wrapper only owns filter state.
+ * One row of the list. `node` is the server-rendered item, passed through as
+ * a ReactNode so this client wrapper only owns filter state.
  */
-export type ProjectEntry = {
+export type FilterableEntry<C extends string> = {
   id: string
-  categories: ProjectCategory[]
+  categories: C[]
   node: React.ReactNode
 }
 
-export function ProjectsList({
+/**
+ * Chip-filtered, "show more" list shared by the Projects and Contributions
+ * panels. Chips are derived from `categories` and hidden when empty.
+ */
+export function FilterableList<C extends string>({
   entries,
   categories,
+  filterLabel,
   max = 4,
 }: {
-  entries: ProjectEntry[]
-  categories: { id: ProjectCategory; label: string }[]
+  entries: FilterableEntry<C>[]
+  categories: { id: C; label: string }[]
+  /** Accessible name for the chip group, e.g. "Filter projects by category". */
+  filterLabel: string
   max?: number
 }) {
-  const [filter, setFilter] = useState<Filter>("all")
+  const [filter, setFilter] = useState<C | "all">("all")
   const [expanded, setExpanded] = useState(false)
 
   const [click] = useClickSound()
@@ -52,13 +56,13 @@ export function ProjectsList({
   const visible = expanded ? filtered : filtered.slice(0, max)
   const hasMore = filtered.length > max
 
-  const selectFilter = (next: Filter) => {
+  const selectFilter = (next: C | "all") => {
     click()
     setFilter(next)
     setExpanded(false)
   }
 
-  const chips: { id: Filter; label: string }[] = [
+  const chips: { id: C | "all"; label: string }[] = [
     { id: "all", label: "All" },
     ...categories.filter((category) => (counts[category.id] ?? 0) > 0),
   ]
@@ -68,7 +72,7 @@ export function ProjectsList({
       <div
         className="flex flex-wrap items-center gap-1.5 border-b border-line px-4 py-3"
         role="group"
-        aria-label="Filter projects by category"
+        aria-label={filterLabel}
       >
         {chips.map((chip) => {
           const isActive = chip.id === filter

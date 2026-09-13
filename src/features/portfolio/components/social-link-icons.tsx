@@ -1,4 +1,4 @@
-import { PackageIcon } from "lucide-react"
+import { FileCode2Icon, PackageIcon } from "lucide-react"
 
 import {
   GitHubIcon,
@@ -17,6 +17,7 @@ import type { SocialName } from "@/features/portfolio/data/social-links"
 export const SOCIAL_ICONS: Record<SocialName, React.JSX.Element> = {
   x: <XIcon />,
   github: <GitHubIcon />,
+  gist: <FileCode2Icon />,
   linkedin: <LinkedInIcon />,
   medium: <MediumIcon />,
   npm: <NpmIcon />,

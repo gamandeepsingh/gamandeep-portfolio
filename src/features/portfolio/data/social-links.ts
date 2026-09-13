@@ -18,6 +18,11 @@ export const SOCIAL = {
     href: "https://github.com/gamandeepsingh",
     sameAs: true,
   },
+  gist: {
+    title: "Gist",
+    handle: "gamandeepsingh",
+    href: "https://gist.github.com/gamandeepsingh/4c3edb42d3dff54ecf9c5e47e59ca79d",
+  },
   linkedin: {
     title: "LinkedIn",
     handle: "gamandeep-singh",

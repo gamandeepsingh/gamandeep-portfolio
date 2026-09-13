@@ -178,7 +178,7 @@ export function ProjectItem({
               href={addQueryParams(project.link, UTM_PARAMS)}
               target="_blank"
               rel="noopener"
-              className="relative block rounded-(--image-radius) p-10 grayscale transition-[filter] duration-300 ease-[cubic-bezier(0.42,0,0.58,1)] select-none hover:grayscale-0 [--image-radius:var(--radius-xl)]"
+              className="relative block rounded-(--image-radius) p-10 grayscale transition-[filter] duration-300 ease-[cubic-bezier(0.42,0,0.58,1)] select-none [--image-radius:var(--radius-xl)] hover:grayscale-0"
               style={{ backgroundImage: getPreviewGradient(project.id) }}
               aria-label={`Preview of ${project.title}`}
             >
