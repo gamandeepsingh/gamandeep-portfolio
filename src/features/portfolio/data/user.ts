@@ -15,7 +15,6 @@ export const USER: User = {
     "Also known as Ghost.",
   ],
   address: "Bengaluru, India",
-  phoneNumberB64: "KzkxNjM5NDAwMzU5Mg==", // E.164 format, base64 encoded (https://t.io.vn/base64-string-converter)
   emailB64: "Z2FtYW5kZWVwc2luZ2g2QGdtYWlsLmNvbQ==", // base64 encoded
   website: "https://gamandeep.xyz",
   jobTitle: "Full Stack Engineer",
