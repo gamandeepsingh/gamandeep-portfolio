@@ -14,7 +14,7 @@ export const SITE_INFO = {
 
 export const LICENSE = {
   name: "MIT License",
-  url: "https://github.com/gamandeepsingh/portfolio/blob/main/LICENSE",
+  url: "https://github.com/gamandeepsingh/gamandeep-portfolio/blob/main/LICENSE",
 }
 
 export const META_THEME_COLORS = {
@@ -47,9 +47,9 @@ export const MOBILE_NAV: NavItem<Route>[] = [
 
 export const X_HANDLE = SOCIAL.x.handle
 export const GITHUB_USERNAME = SOCIAL.github.handle
-export const SOURCE_CODE_GITHUB_REPO = "gamandeepsingh/portfolio"
+export const SOURCE_CODE_GITHUB_REPO = "gamandeepsingh/gamandeep-portfolio"
 export const SOURCE_CODE_GITHUB_URL =
-  "https://github.com/gamandeepsingh/portfolio"
+  "https://github.com/gamandeepsingh/gamandeep-portfolio"
 
 export const UTM_PARAMS = {
   utm_source: "gamandeep.xyz",
