@@ -5,7 +5,7 @@ import { useEffect } from "react"
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"])
 
 /**
- * Pings the first-party hit counter once per page load. Skips local dev and
+ * Adds one page view to the first-party counter on every load or refresh. Skips local dev and
  * automated browsers so the numbers only reflect real visits.
  */
 export function InsightsTracker() {

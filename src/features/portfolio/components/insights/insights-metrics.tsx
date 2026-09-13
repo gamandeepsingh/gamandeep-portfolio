@@ -25,16 +25,16 @@ export function InsightsMetrics({
 
       <dl className="grid grid-cols-2 md:grid-cols-4">
         <Metric>
-          <MetricLabel>Total visitors</MetricLabel>
-          <MetricValue>{formatNumber(summary.total_visitors)}</MetricValue>
+          <MetricLabel>Total views</MetricLabel>
+          <MetricValue>{formatNumber(summary.total_views)}</MetricValue>
         </Metric>
 
         <Metric>
           <MetricLabel>
             Last 30 days
-            <MetricChange value={changes.period_visitors} />
+            <MetricChange value={changes.period_views} />
           </MetricLabel>
-          <MetricValue>{formatNumber(summary.period_visitors)}</MetricValue>
+          <MetricValue>{formatNumber(summary.period_views)}</MetricValue>
         </Metric>
 
         <Metric>

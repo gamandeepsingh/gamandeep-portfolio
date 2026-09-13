@@ -140,7 +140,7 @@ export default function RootLayout({
         </Providers>
         {/* Vercel Web Analytics — no-op outside Vercel deployments. */}
         <Analytics />
-        {/* First-party hit counter (Redis) — feeds the Insights section on the home page. */}
+        {/* First-party page-view counter (Redis) — feeds the Insights section on the home page. */}
         {process.env.REDIS_URL && <InsightsTracker />}
       </body>
     </html>

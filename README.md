@@ -37,9 +37,9 @@ pnpm format:check
 pnpm build
 ```
 
-## Insights section (visitor stats)
+## Insights section (page views)
 
-Counted first-party in Redis — no third-party script, no cookies. Every page load pings `POST /api/insights/hit`, which hashes IP + user agent with a daily salt and records one unique visitor per UTC day (`insights:visitors:<date>`) plus a running total (`insights:visitors:total`). Set in `.env.local` / Vercel:
+Counted first-party in Redis — no third-party script, no cookies, nothing stored about the visitor. Every page load or refresh pings `POST /api/insights/hit`, which adds one to that UTC day's bucket (`insights:views:<date>`) and to the running total (`insights:views:total`). Set in `.env.local` / Vercel:
 
 ```
 REDIS_URL=redis://default:<password>@<host>:<port>
@@ -51,6 +51,6 @@ The section stays hidden until `REDIS_URL` is set. Local hosts and headless brow
 
 - `/` — the portfolio
 - `/vcard` — downloadable vCard
-- `/api/insights/hit` — `POST`, first-party visitor counter (see above)
+- `/api/insights/hit` — `POST`, first-party page-view counter (see above)
 - `/og/simple?title=…&description=…` — OG image generator
 - `/llms.txt`, `/about.md`, `/experience.md`, `/education.md`, `/projects.md`, `/awards.md`, `/certifications.md` — Markdown for AI agents

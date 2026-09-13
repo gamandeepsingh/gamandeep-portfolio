@@ -31,12 +31,10 @@ export function getRedis(): Redis | null {
   return globalForRedis.__redis
 }
 
-/** Key layout for the first-party visitor counter behind the Insights section. */
+/** Key layout for the first-party page-view counter behind the Insights section. */
 export const INSIGHTS_KEYS = {
-  /** Unique visitors on a given UTC day. */
-  day: (date: string) => `insights:visitors:${date}`,
-  /** Running sum of every daily unique count since tracking began. */
-  total: "insights:visitors:total",
-  /** Per-day dedupe marker so the same visitor only counts once a day. */
-  seen: (date: string, visitor: string) => `insights:seen:${date}:${visitor}`,
+  /** Page views on a given UTC day. */
+  day: (date: string) => `insights:views:${date}`,
+  /** Running total of every page view since tracking began. */
+  total: "insights:views:total",
 } as const

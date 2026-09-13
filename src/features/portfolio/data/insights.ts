@@ -7,23 +7,23 @@ import { getRedis, INSIGHTS_KEYS } from "@/lib/redis"
 type ISODateString = string
 
 export type InsightsSummary = {
-  /** Visitors since first-party tracking began. */
-  total_visitors: number
-  /** Visitors in the plotted 30-day window. */
-  period_visitors: number
-  /** Mean visitors per day in the window. */
+  /** Page views since first-party tracking began. */
+  total_views: number
+  /** Page views in the plotted 30-day window. */
+  period_views: number
+  /** Mean page views per day in the window. */
   daily_average: number
-  /** Highest single-day visitor count in the window. */
+  /** Highest single-day view count in the window. */
   best_day: number
 }
 
 export type InsightsSeriesItem = {
   date: ISODateString
-  visitors: number
+  views: number
 }
 
 const METRIC_KEYS = [
-  "period_visitors",
+  "period_views",
   "daily_average",
   "best_day",
 ] as const satisfies readonly (keyof InsightsSummary)[]
@@ -75,9 +75,9 @@ function getWindows(): { current: Range; previous: Range } {
 }
 
 /**
- * Visitors are counted first-party: `/api/insights/hit` records one unique
- * visitor per UTC day in Redis (see `src/lib/redis.ts` for the key layout),
- * so every number here is a daily-unique visitor count.
+ * Views are counted first-party: `/api/insights/hit` adds one to the UTC day
+ * bucket in Redis on every page load (see `src/lib/redis.ts` for the key
+ * layout), so every number here is a page-view count.
  */
 function toDateParam(time: number): ISODateString {
   return new Date(time).toISOString().slice(0, 10)
@@ -110,7 +110,7 @@ async function fetchSeries(range: Range): Promise<InsightsSeriesItem[] | null> {
     const counts = await redis.mget(dates.map(INSIGHTS_KEYS.day))
     return dates.map((date, i) => ({
       date,
-      visitors: Number(counts[i]) || 0,
+      views: Number(counts[i]) || 0,
     }))
   } catch (error) {
     console.error("[insights] failed to read series", error)
@@ -134,12 +134,12 @@ async function fetchTotal(): Promise<number | null> {
 }
 
 function summarize(series: InsightsSeriesItem[]) {
-  const counts = series.map((d) => d.visitors)
-  const period_visitors = counts.reduce((sum, n) => sum + n, 0)
+  const counts = series.map((d) => d.views)
+  const period_views = counts.reduce((sum, n) => sum + n, 0)
 
   return {
-    period_visitors,
-    daily_average: series.length > 0 ? period_visitors / series.length : 0,
+    period_views,
+    daily_average: series.length > 0 ? period_views / series.length : 0,
     best_day: counts.length > 0 ? Math.max(...counts) : 0,
   }
 }
@@ -153,8 +153,8 @@ function getPercentChange(current: number, previous?: number): number | null {
 }
 
 function getChanges(
-  current: Omit<InsightsSummary, "total_visitors">,
-  previous: Omit<InsightsSummary, "total_visitors"> | null
+  current: Omit<InsightsSummary, "total_views">,
+  previous: Omit<InsightsSummary, "total_views"> | null
 ): InsightsChanges {
   return Object.fromEntries(
     METRIC_KEYS.map((key) => [
@@ -174,9 +174,7 @@ function getMockInsights(): InsightsResponse {
     const day = (t - start) / DAY_MS
     series.push({
       date: toDateParam(t),
-      visitors: Math.round(
-        18 + 12 * Math.sin(day / 3) + (day % 7 < 2 ? -6 : 4)
-      ),
+      views: Math.round(18 + 12 * Math.sin(day / 3) + (day % 7 < 2 ? -6 : 4)),
     })
   }
 
@@ -185,9 +183,9 @@ function getMockInsights(): InsightsResponse {
   return {
     startDate: toDateParam(start),
     endDate: toDateParam(end),
-    summary: { total_visitors: 4_812, ...current },
+    summary: { total_views: 4_812, ...current },
     series,
-    changes: { period_visitors: 12.4, daily_average: 12.4, best_day: -3.2 },
+    changes: { period_views: 12.4, daily_average: 12.4, best_day: -3.2 },
   }
 }
 
@@ -213,7 +211,7 @@ async function fetchInsights(): Promise<InsightsResponse | null> {
     summary: {
       // Fall back to the window when the total read fails, rather than
       // showing a total smaller than the last 30 days.
-      total_visitors: Math.max(total ?? 0, currentSummary.period_visitors),
+      total_views: Math.max(total ?? 0, currentSummary.period_views),
       ...currentSummary,
     },
     series,

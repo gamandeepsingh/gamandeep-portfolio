@@ -36,8 +36,8 @@ export function InsightsChart({
           margin={{ top: 16, right: 32, bottom: 40, left: 32 }}
         >
           <Grid horizontal />
-          <Line dataKey="visitors" stroke="var(--chart-1)" strokeWidth={2} />
-          <ChartTooltip rowLabels={{ visitors: "Visitors" }} />
+          <Line dataKey="views" stroke="var(--chart-1)" strokeWidth={2} />
+          <ChartTooltip rowLabels={{ views: "Views" }} />
         </LineChart>
       ) : (
         <div className="grid aspect-2/1 w-full place-content-center sm:aspect-3/1">
@@ -49,7 +49,7 @@ export function InsightsChart({
         <span className="mr-2 tracking-wide text-muted-foreground/80">
           Fig. {figureNumber}.
         </span>
-        Daily unique visitors{dateRange}. Counted first-party, no cookies.
+        Daily page views{dateRange}. Counted first-party, no cookies.
       </figcaption>
     </figure>
   )
