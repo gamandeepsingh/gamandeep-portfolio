@@ -1,4 +1,5 @@
 import { FilterableList } from "@/components/filterable-list"
+import { HandwrittenPanelNote } from "@/features/portfolio/components/handwritten-note"
 import {
   Panel,
   PanelHeader,
@@ -40,6 +41,9 @@ export function Contributions() {
         filterLabel="Filter contributions by organisation"
         max={5}
       />
+      <HandwrittenPanelNote side="right">
+        unpaid, but merged
+      </HandwrittenPanelNote>
     </Panel>
   )
 }

@@ -1,6 +1,7 @@
 import { compareDesc } from "date-fns"
 
 import { CollapsibleList } from "@/components/collapsible-list"
+import { HandwrittenPanelNote } from "@/features/portfolio/components/handwritten-note"
 import {
   Panel,
   PanelHeader,
@@ -35,6 +36,7 @@ export function Awards() {
         keyExtractor={(item) => item.id}
         renderItem={(item) => <AwardItem award={item} />}
       />
+      <HandwrittenPanelNote side="right">mom is proud</HandwrittenPanelNote>
     </Panel>
   )
 }

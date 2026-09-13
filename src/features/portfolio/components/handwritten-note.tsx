@@ -36,4 +36,39 @@ function HandwrittenArrow({
   )
 }
 
-export { HandwrittenArrow, HandwrittenNote }
+/**
+ * A doodle in the page gutter beside a panel title, with an arrow aimed back
+ * at the panel. Only rendered where there's room next to the column.
+ */
+function HandwrittenPanelNote({
+  side,
+  className,
+  children,
+}: {
+  side: "left" | "right"
+  className?: string
+  children: React.ReactNode
+}) {
+  return (
+    <HandwrittenNote
+      className={cn(
+        "top-2 hidden w-28 flex-col lg:flex",
+        side === "left"
+          ? "right-full mr-4 items-end text-right"
+          : "left-full ml-4 items-start",
+        className
+      )}
+      aria-hidden
+    >
+      <span className="-rotate-6">{children}</span>
+      <HandwrittenArrow
+        className={cn(
+          "size-7 -rotate-6",
+          side === "left" ? "translate-x-4 -scale-x-100" : "-translate-x-2"
+        )}
+      />
+    </HandwrittenNote>
+  )
+}
+
+export { HandwrittenArrow, HandwrittenNote, HandwrittenPanelNote }

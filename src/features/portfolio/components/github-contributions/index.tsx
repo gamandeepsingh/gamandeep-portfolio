@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 
+import { HandwrittenPanelNote } from "@/features/portfolio/components/handwritten-note"
 import { getGitHubContributions } from "@/features/portfolio/data/github-contributions"
 
 import { Panel } from "../panel"
@@ -17,6 +18,10 @@ export function GitHubContributions() {
       </Suspense>
 
       <div className="h-px" />
+
+      <HandwrittenPanelNote side="right" className="top-4">
+        more green, less sleep
+      </HandwrittenPanelNote>
     </Panel>
   )
 }

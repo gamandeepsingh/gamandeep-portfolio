@@ -1,6 +1,7 @@
 import { compareDesc } from "date-fns"
 
 import { cn } from "@/lib/utils"
+import { HandwrittenPanelNote } from "@/features/portfolio/components/handwritten-note"
 import {
   Panel,
   PanelHeader,
@@ -49,6 +50,9 @@ export function Blog() {
           ))}
         </ul>
       </div>
+      <HandwrittenPanelNote side="left">
+        reads better than my commits
+      </HandwrittenPanelNote>
     </Panel>
   )
 }

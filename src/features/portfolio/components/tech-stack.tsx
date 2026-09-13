@@ -1,5 +1,6 @@
 import { TECH_STACK } from "../data/tech-stack"
 import type { TechStack as TechStackType } from "../types/tech-stack"
+import { HandwrittenPanelNote } from "./handwritten-note"
 import { Panel, PanelHeader, PanelTitle } from "./panel"
 import { PanelTitleCopy } from "./panel-title-copy"
 
@@ -68,6 +69,9 @@ export function TechStack() {
           }
         )}
       </div>
+      <HandwrittenPanelNote side="left">
+        half of these learned at 3am
+      </HandwrittenPanelNote>
     </Panel>
   )
 }

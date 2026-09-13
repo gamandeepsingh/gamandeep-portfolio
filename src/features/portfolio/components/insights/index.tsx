@@ -1,5 +1,6 @@
 import { format } from "date-fns"
 
+import { HandwrittenPanelNote } from "@/features/portfolio/components/handwritten-note"
 import {
   Panel,
   PanelHeader,
@@ -45,6 +46,9 @@ export async function Insights({ figureNumber }: { figureNumber: number }) {
         <InsightsMetrics summary={data.summary} changes={data.changes} />
 
         <InsightsChart series={data.series} figureNumber={figureNumber} />
+        <HandwrittenPanelNote side="left">
+          hi, you&apos;re in here now
+        </HandwrittenPanelNote>
       </Panel>
     </>
   )

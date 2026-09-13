@@ -1,4 +1,5 @@
 import { FilterableList } from "@/components/filterable-list"
+import { HandwrittenPanelNote } from "@/features/portfolio/components/handwritten-note"
 import {
   Panel,
   PanelHeader,
@@ -40,6 +41,9 @@ export function Projects() {
         filterLabel="Filter projects by category"
         max={4}
       />
+      <HandwrittenPanelNote side="left">
+        most of them still work
+      </HandwrittenPanelNote>
     </Panel>
   )
 }
