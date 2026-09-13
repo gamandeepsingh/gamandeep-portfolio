@@ -53,7 +53,10 @@ export function ProfileHeader() {
               {USER.displayName}
             </h1>
 
-            <VerifiedIcon className="size-4.5 select-none text-[#1D9BF0]" aria-hidden />
+            <VerifiedIcon
+              className="size-4.5 text-[#1D9BF0] select-none"
+              aria-hidden
+            />
           </div>
 
           <FlipSentences className="h-12.5 border-t border-line py-1 pl-4 sm:h-9">

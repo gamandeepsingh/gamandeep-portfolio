@@ -39,19 +39,18 @@ pnpm build
 
 ## Insights section (visitor stats)
 
-Powered by [GoatCounter](https://www.goatcounter.com) (free for personal sites). Create an account, pick a code (`<code>.goatcounter.com`), and add an API token with **Read statistics**. Then set in `.env.local` / Vercel:
+Counted first-party in Redis — no third-party script, no cookies. Every page load pings `POST /api/insights/hit`, which hashes IP + user agent with a daily salt and records one unique visitor per UTC day (`insights:visitors:<date>`) plus a running total (`insights:visitors:total`). Set in `.env.local` / Vercel:
 
 ```
-NEXT_PUBLIC_GOATCOUNTER_CODE=<code>
-GOATCOUNTER_CODE=<code>
-GOATCOUNTER_API_TOKEN=<token>
+REDIS_URL=redis://default:<password>@<host>:<port>
 ```
 
-The section stays hidden until all three are set. Use `INSIGHTS_MOCK=true` in dev to preview it with fake data.
+The section stays hidden until `REDIS_URL` is set. Local hosts and headless browsers are never counted. Use `INSIGHTS_MOCK=true` in dev to preview it with fake data.
 
 ## Routes
 
 - `/` — the portfolio
 - `/vcard` — downloadable vCard
+- `/api/insights/hit` — `POST`, first-party visitor counter (see above)
 - `/og/simple?title=…&description=…` — OG image generator
 - `/llms.txt`, `/about.md`, `/experience.md`, `/education.md`, `/projects.md`, `/awards.md`, `/certifications.md` — Markdown for AI agents

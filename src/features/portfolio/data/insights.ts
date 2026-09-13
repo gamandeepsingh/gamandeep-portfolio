@@ -2,12 +2,12 @@ import "server-only"
 
 import { unstable_cache } from "next/cache"
 
-import { USER } from "@/features/portfolio/data/user"
+import { getRedis, INSIGHTS_KEYS } from "@/lib/redis"
 
 type ISODateString = string
 
 export type InsightsSummary = {
-  /** Visitors since the site launched (`USER.dateCreated`). */
+  /** Visitors since first-party tracking began. */
   total_visitors: number
   /** Visitors in the plotted 30-day window. */
   period_visitors: number
@@ -51,78 +51,64 @@ const RANGE_DAYS = 30
 const DAY_MS = 24 * 60 * 60 * 1000
 
 /**
- * GoatCounter counts *visitors* (unique visits per day) rather than raw
- * pageviews, so every number here is a visitor count.
- * https://www.goatcounter.com/help/api
+ * Visitors are counted first-party: `/api/insights/hit` records one unique
+ * visitor per UTC day in Redis (see `src/lib/redis.ts` for the key layout),
+ * so every number here is a daily-unique visitor count.
  */
-type GoatCounterTotal = {
-  total: number
-  stats: { day: string; daily: number }[]
-}
-
 type Range = { start: number; end: number }
-
-async function fetchTotal(range: Range): Promise<GoatCounterTotal | null> {
-  const code = process.env.GOATCOUNTER_CODE
-  const token = process.env.GOATCOUNTER_API_TOKEN
-
-  if (!code || !token) {
-    return null
-  }
-
-  try {
-    const url = new URL(`https://${code}.goatcounter.com/api/v0/stats/total`)
-    // The API wants hour-aligned RFC 3339 timestamps.
-    url.searchParams.set("start", toHourParam(range.start))
-    url.searchParams.set("end", toHourParam(range.end))
-
-    const res = await fetch(url, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-
-    if (!res.ok) {
-      return null
-    }
-
-    return (await res.json()) as GoatCounterTotal
-  } catch {
-    return null
-  }
-}
-
-function toHourParam(time: number): string {
-  const date = new Date(time)
-  date.setUTCMinutes(0, 0, 0)
-  return date.toISOString().replace(/\.\d{3}Z$/, "Z")
-}
 
 function toDateParam(time: number): ISODateString {
   return new Date(time).toISOString().slice(0, 10)
 }
 
-/**
- * GoatCounter only returns days with traffic, so build the full range and fill
- * the gaps with zero to keep the x-axis continuous.
- */
-function toSeries(
-  stats: GoatCounterTotal["stats"],
-  range: Range
-): InsightsSeriesItem[] {
-  const byDate = new Map<string, InsightsSeriesItem>()
+function listDates(range: Range): ISODateString[] {
+  const dates: ISODateString[] = []
   for (let t = range.start; t < range.end; t += DAY_MS) {
-    const date = toDateParam(t)
-    byDate.set(date, { date, visitors: 0 })
+    dates.push(toDateParam(t))
+  }
+  return dates
+}
+
+/**
+ * Reads every day in the range in one round trip. Days without traffic have
+ * no key, so they come back as zero to keep the x-axis continuous.
+ */
+async function fetchSeries(range: Range): Promise<InsightsSeriesItem[] | null> {
+  const redis = getRedis()
+  if (!redis) {
+    return null
   }
 
-  for (const stat of stats ?? []) {
-    const item = byDate.get(stat.day.slice(0, 10))
-    if (item) item.visitors = Number(stat.daily) || 0
+  const dates = listDates(range)
+  if (dates.length === 0) {
+    return []
   }
 
-  return [...byDate.values()]
+  try {
+    const counts = await redis.mget(dates.map(INSIGHTS_KEYS.day))
+    return dates.map((date, i) => ({
+      date,
+      visitors: Number(counts[i]) || 0,
+    }))
+  } catch (error) {
+    console.error("[insights] failed to read series", error)
+    return null
+  }
+}
+
+async function fetchTotal(): Promise<number | null> {
+  const redis = getRedis()
+  if (!redis) {
+    return null
+  }
+
+  try {
+    const total = await redis.get(INSIGHTS_KEYS.total)
+    return Number(total) || 0
+  } catch (error) {
+    console.error("[insights] failed to read total", error)
+    return null
+  }
 }
 
 function summarize(series: InsightsSeriesItem[]) {
@@ -189,42 +175,35 @@ const getCachedInsights = unstable_cache(
     const start = end - RANGE_DAYS * DAY_MS
     const current: Range = { start, end }
     const previous: Range = { start: start - RANGE_DAYS * DAY_MS, end: start }
-    const allTime: Range = { start: Date.parse(USER.dateCreated), end }
 
-    const [currentTotal, previousTotal, allTimeTotal] = await Promise.all([
-      fetchTotal(current),
-      fetchTotal(previous),
-      fetchTotal(allTime),
+    const [series, previousSeries, total] = await Promise.all([
+      fetchSeries(current),
+      fetchSeries(previous),
+      fetchTotal(),
     ])
 
-    if (currentTotal === null) {
+    if (series === null) {
       return null
     }
 
-    const series = toSeries(currentTotal.stats, current)
     const currentSummary = summarize(series)
-    const previousSummary = previousTotal
-      ? summarize(toSeries(previousTotal.stats, previous))
-      : null
+    const previousSummary = previousSeries ? summarize(previousSeries) : null
 
     return {
       startDate: toDateParam(start),
       endDate: toDateParam(end),
       summary: {
-        // Fall back to the window when the all-time query fails, rather than
+        // Fall back to the window when the total read fails, rather than
         // showing a total smaller than the last 30 days.
-        total_visitors: Math.max(
-          allTimeTotal?.total ?? 0,
-          currentSummary.period_visitors
-        ),
+        total_visitors: Math.max(total ?? 0, currentSummary.period_visitors),
         ...currentSummary,
       },
       series,
       changes: getChanges(currentSummary, previousSummary),
     }
   },
-  ["goatcounter-insights"],
-  { revalidate: 3600 } // 1 hour
+  ["redis-insights"],
+  { revalidate: 600 } // 10 minutes
 )
 
 export async function getInsights(): Promise<InsightsResponse | null> {
@@ -238,7 +217,7 @@ export async function getInsights(): Promise<InsightsResponse | null> {
 
   // Skip the cache entirely when unconfigured, so adding keys later takes
   // effect on the next request instead of after the cache expires.
-  if (!process.env.GOATCOUNTER_CODE || !process.env.GOATCOUNTER_API_TOKEN) {
+  if (!process.env.REDIS_URL) {
     return null
   }
 

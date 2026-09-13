@@ -12,6 +12,7 @@ import { META_THEME_COLORS, SITE_INFO, X_HANDLE } from "@/config/site"
 import { fontVariables } from "@/lib/fonts"
 import { JsonLdScript } from "@/lib/json-ld"
 import { Providers } from "@/components/providers"
+import { InsightsTracker } from "@/features/portfolio/components/insights/insights-tracker"
 import { USER } from "@/features/portfolio/data/user"
 
 function getWebSiteJsonLd(): WithContext<WebSite> {
@@ -139,14 +140,8 @@ export default function RootLayout({
         </Providers>
         {/* Vercel Web Analytics — no-op outside Vercel deployments. */}
         <Analytics />
-        {/* GoatCounter — feeds the Insights section on the home page. Skips localhost by itself. */}
-        {process.env.NEXT_PUBLIC_GOATCOUNTER_CODE && (
-          <Script
-            src="https://gc.zgo.at/count.js"
-            data-goatcounter={`https://${process.env.NEXT_PUBLIC_GOATCOUNTER_CODE}.goatcounter.com/count`}
-            strategy="afterInteractive"
-          />
-        )}
+        {/* First-party hit counter (Redis) — feeds the Insights section on the home page. */}
+        {process.env.REDIS_URL && <InsightsTracker />}
       </body>
     </html>
   )

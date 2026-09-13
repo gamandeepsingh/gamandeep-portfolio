@@ -15,7 +15,7 @@ import { getPlottedRange } from "./plotted-range"
 
 const ID = "insights"
 
-/** Renders nothing until GoatCounter credentials are configured (see `.env.example`). */
+/** Renders nothing until `REDIS_URL` is configured (see `.env.example`). */
 export async function Insights({ figureNumber }: { figureNumber: number }) {
   const data = await getInsights()
 

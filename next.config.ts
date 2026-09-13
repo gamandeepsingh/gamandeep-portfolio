@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   typedRoutes: true,
+  // Keep the TCP client out of the server bundle; it relies on Node internals.
+  serverExternalPackages: ["ioredis"],
   devIndicators: false,
   images: {
     remotePatterns: [

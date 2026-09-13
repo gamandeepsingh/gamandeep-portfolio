@@ -49,16 +49,7 @@ export function InsightsChart({
         <span className="mr-2 tracking-wide text-muted-foreground/80">
           Fig. {figureNumber}.
         </span>
-        Daily visitors{dateRange}. Source:{" "}
-        <a
-          href="https://www.goatcounter.com"
-          className="link-underline"
-          target="_blank"
-          rel="noopener"
-        >
-          GoatCounter
-        </a>
-        .
+        Daily unique visitors{dateRange}. Counted first-party, no cookies.
       </figcaption>
     </figure>
   )

@@ -71,7 +71,7 @@ export default function HomePage() {
 
           <Certifications />
 
-          {/* Renders nothing (and no separator) until Umami is configured. */}
+          {/* Renders nothing (and no separator) until REDIS_URL is configured. */}
           <Suspense fallback={<InsightsSkeleton />}>
             <Insights figureNumber={3} />
           </Suspense>
