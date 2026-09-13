@@ -82,7 +82,7 @@ export function SiteFooterCad() {
               </a>
             </Field>
 
-            <Field label="Typeface">Geist</Field>            
+            <Field label="Typeface">Geist</Field>
 
             <Field className="col-span-2 md:col-span-4" label="Stack">
               <ul className="grid grid-cols-2 gap-0.5 md:grid-cols-4">

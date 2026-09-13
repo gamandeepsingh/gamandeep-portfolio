@@ -33,7 +33,7 @@ export const SOCIAL = {
   npm: {
     title: "npm",
     handle: "gamandeepsingh",
-    href: "https://www.npmjs.com/~gamandeepsingh",
+    href: "https://www.npmjs.com/~gamandeep",
   },
   crates: {
     title: "crates.io",

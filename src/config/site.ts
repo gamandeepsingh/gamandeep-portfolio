@@ -51,7 +51,6 @@ export const SOURCE_CODE_GITHUB_REPO = "gamandeepsingh/portfolio"
 export const SOURCE_CODE_GITHUB_URL =
   "https://github.com/gamandeepsingh/portfolio"
 
-
 export const UTM_PARAMS = {
   utm_source: "gamandeep.xyz",
 }

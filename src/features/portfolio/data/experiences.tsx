@@ -6,7 +6,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "gpunet",
     companyName: "GPU.Net",
-    companyLogo: "https://unavatar.io/gpu.net",
+    companyLogo: "https://unavatar.io/x/gpunet",
     companyWebsite: "https://gpu.net",
     location: "Bengaluru, India",
     locationType: "On-site",
