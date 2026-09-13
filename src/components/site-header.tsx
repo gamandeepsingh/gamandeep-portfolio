@@ -11,6 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
 import { GhostMark } from "@/components/ghost-mark"
+import { MusicToggle } from "@/components/music-toggle"
 import { NavDesktop } from "@/components/nav-desktop"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { USER } from "@/features/portfolio/data/user"
@@ -66,6 +67,7 @@ export function SiteHeader() {
             orientation="vertical"
             className="mx-2 data-vertical:h-5 data-vertical:self-center"
           />
+          <MusicToggle />
           <ThemeToggle />
         </div>
       </div>
