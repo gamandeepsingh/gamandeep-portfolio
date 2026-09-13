@@ -1,4 +1,13 @@
-import type { Project } from "../types/projects"
+import type { Project, ProjectCategory } from "../types/projects"
+
+/** Filter chips shown above the project list, in display order. */
+export const PROJECT_CATEGORIES: { id: ProjectCategory; label: string }[] = [
+  { id: "web3", label: "Web3" },
+  { id: "web", label: "Web Apps" },
+  { id: "tool", label: "Tools" },
+  { id: "ui", label: "UI/UX" },
+  { id: "ai", label: "AI/ML" },
+]
 
 export const PROJECTS: Project[] = [
   {

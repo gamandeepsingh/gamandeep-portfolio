@@ -40,6 +40,21 @@ const CATEGORY_ICONS: Record<ProjectCategory, React.ReactElement> = {
   ai: <SparklesIcon />,
 }
 
+/**
+ * Deterministic "random" gradient derived from the project id so the same
+ * project always gets the same colors and SSR/CSR output matches.
+ */
+function getPreviewGradient(seed: string) {
+  let hash = 0
+  for (let i = 0; i < seed.length; i++) {
+    hash = (hash * 31 + seed.charCodeAt(i)) | 0
+  }
+  const hue = Math.abs(hash) % 360
+  const hue2 = (hue + 40 + (Math.abs(hash >> 8) % 80)) % 360
+  const angle = Math.abs(hash >> 16) % 360
+  return `linear-gradient(${angle}deg, oklch(0.8 0.14 ${hue}), oklch(0.65 0.18 ${hue2}))`
+}
+
 export function ProjectItem({
   className,
   project,
@@ -163,11 +178,12 @@ export function ProjectItem({
               href={addQueryParams(project.link, UTM_PARAMS)}
               target="_blank"
               rel="noopener"
-              className="group/preview relative block select-none [--image-radius:var(--radius-xl)]"
+              className="relative block rounded-(--image-radius) p-10 grayscale transition-[filter] duration-300 ease-[cubic-bezier(0.42,0,0.58,1)] select-none hover:grayscale-0 [--image-radius:var(--radius-xl)]"
+              style={{ backgroundImage: getPreviewGradient(project.id) }}
               aria-label={`Preview of ${project.title}`}
             >
               <Image
-                className="aspect-video w-full rounded-(--image-radius) object-cover object-top grayscale transition-[filter] duration-300 ease-[cubic-bezier(0.42,0,0.58,1)] group-hover/preview:grayscale-0"
+                className="aspect-video w-full rounded-[calc(var(--image-radius)-0.2rem)] object-cover object-top"
                 src={project.image}
                 alt={`${project.title} preview`}
                 width={1200}
