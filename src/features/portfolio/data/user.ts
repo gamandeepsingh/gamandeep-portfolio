@@ -9,7 +9,7 @@ export const USER: User = {
   pronouns: "he/him",
   bio: "Full Stack Developer building scalable, real-time systems and Web3 applications on Solana.",
   flipSentences: [
-    "Full Stack Developer. Web3 Enthusiast.",
+    "Full Stack Developer. Web3 Developer.",
     "Building real-time backends with Node.js & Rust.",
     "Shipping on Solana.",
     "Also known as Ghost.",
@@ -39,7 +39,7 @@ export const USER: User = {
 `,
   avatar: "/images/avatar.png",
   ogImage:
-    "/og/simple?title=Gamandeep%20Singh&description=Full%20Stack%20Developer%20%C2%B7%20Web3%20Enthusiast",
+    "/og/simple?title=Gamandeep%20Singh&description=Full%20Stack%20Developer%20%C2%B7%20Web3%20Developer",
   resumeUrl:
     "https://drive.google.com/file/d/1zCZC-D79eKIy4BOGdzVE-kdfOT1SIb2s/view?usp=sharing",
   timeZone: "Asia/Kolkata",

@@ -1,6 +1,6 @@
 # gamandeep.xyz
 
-Personal portfolio of **Gamandeep Singh** — Full Stack Developer · Web3 Enthusiast.
+Personal portfolio of **Gamandeep Singh** — Full Stack Developer · Web3 Developer.
 
 ## Editing content
 

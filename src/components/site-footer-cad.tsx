@@ -14,7 +14,7 @@ import { USER } from "@/features/portfolio/data/user"
 // would read `localhost` in dev.
 const SITE_TITLE = "gamandeep.xyz"
 
-const SITE_SUBTITLE = `${USER.jobTitle} · Web3 Enthusiast`
+const SITE_SUBTITLE = `${USER.jobTitle} · Web3 Developer`
 
 /** Footer laid out as the title block of a technical drawing. */
 export function SiteFooterCad() {
