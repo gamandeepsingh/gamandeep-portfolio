@@ -57,10 +57,10 @@ export default function HomePage() {
           <Education />
           <Separator />
 
-          <Projects />
+          <Contributions />
           <Separator />
 
-          <Contributions />
+          <Projects />
           <Separator />
 
           <Blog />
