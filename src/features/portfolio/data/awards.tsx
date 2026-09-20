@@ -2,6 +2,16 @@ import type { Award } from "../types/awards"
 
 export const AWARDS: Award[] = [
   {
+    id: "superteam-grant-2026",
+    prize: "Grant: $200",
+    title: "Superteam Grant 2026",
+    date: "2026-05",
+    grade: "Web3",
+    description:
+      "- Selected for the Superteam Grant 2026, receiving funding to develop and deploy SOLAI Wallet.",
+    referenceLink: "https://superteam.fun/earn/t/gamandeep",
+  },
+  {
     id: "solana-turbine-q2-2026",
     prize: "Selected Builder",
     title: "Solana Turbine Q2 2026 Cohort",
