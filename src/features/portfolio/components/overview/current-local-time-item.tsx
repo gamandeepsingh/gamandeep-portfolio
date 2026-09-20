@@ -110,11 +110,31 @@ function computeClock(timeZone: string) {
     (new Date(now.toLocaleString("en-US", { timeZone })).getTime() -
       new Date(now.toLocaleString("en-US", { timeZone: "UTC" })).getTime()) /
     60000
-  const hoursDiff = Math.abs(targetOffset - viewerOffset) / 60
-  const diff =
-    hoursDiff < 1
-      ? " // same time"
-      : ` // ${Math.floor(hoursDiff)}h ${targetOffset > viewerOffset ? "ahead" : "behind"}`
+  const deltaMinutes = targetOffset - viewerOffset
+  const absMinutes = Math.abs(deltaMinutes)
+  const h = Math.floor(absMinutes / 60)
+  const m = absMinutes % 60
+
+  // "5h 30m ahead of you", keeping half-hour zones honest.
+  const span = [h > 0 && h + "h", m > 0 && m + "m"].filter(Boolean).join(" ")
+  const relative =
+    deltaMinutes === 0
+      ? "same time as you"
+      : span + (deltaMinutes > 0 ? " ahead of you" : " behind you")
+
+  // Calendar day here vs. there, so a large offset reads as "already tomorrow".
+  const dayKey = (tz?: string) =>
+    new Intl.DateTimeFormat("en-CA", { timeZone: tz }).format(now)
+  const dayThere = dayKey(timeZone)
+  const dayHere = dayKey()
+  const day =
+    dayThere > dayHere
+      ? " · already tomorrow"
+      : dayThere < dayHere
+        ? " · still yesterday"
+        : ""
+
+  const diff = " · " + relative + day
 
   return { time, hour, minute, diff }
 }

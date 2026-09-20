@@ -2,6 +2,21 @@ import type { Education } from "@/features/portfolio/types/education"
 
 export const EDUCATION: Education[] = [
   {
+    id: "solana-turbine",
+    school: "Solana Turbine",
+    degree: "Builder Cohort — Q2 2026",
+    fieldOfStudy: "Solana Program Development",
+    period: {
+      start: "04.2026",
+      end: "06.2026",
+    },
+    description: `- Selected for [Turbin3](https://turbin3.org)'s Q2 2026 builder cohort, an intensive program on production-grade Solana development.
+- Wrote on-chain programs in Rust with Anchor: PDAs, CPIs, token programs and vault/escrow patterns.
+- Shipped a capstone dApp end to end — program, tests, and a TypeScript client.`,
+    skills: ["Rust", "Anchor", "Solana", "TypeScript", "Web3.js"],
+    isExpanded: true,
+  },
+  {
     id: "kiet",
     school: "KIET Group of Institutions",
     degree: "Bachelor of Technology",

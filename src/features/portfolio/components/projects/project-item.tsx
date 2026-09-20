@@ -172,13 +172,14 @@ export function ProjectItem({
       </CollapsibleTrigger>
 
       <CollapsibleContent className="overflow-hidden">
-        <div className="space-y-4 border-t border-line p-4">
+        {/* `group/preview` so hovering the text below colours the image too. */}
+        <div className="group/preview space-y-4 border-t border-line p-4">
           {project.image && (
             <a
               href={addQueryParams(project.link, UTM_PARAMS)}
               target="_blank"
               rel="noopener"
-              className="relative block rounded-(--image-radius) p-10 grayscale transition-[filter] duration-300 ease-[cubic-bezier(0.42,0,0.58,1)] select-none [--image-radius:var(--radius-xl)] hover:grayscale-0"
+              className="relative block rounded-(--image-radius) p-10 grayscale transition-[filter] duration-300 ease-[cubic-bezier(0.42,0,0.58,1)] select-none [--image-radius:var(--radius-xl)] group-hover/preview:grayscale-0"
               style={{ backgroundImage: getPreviewGradient(project.id) }}
               aria-label={`Preview of ${project.title}`}
             >

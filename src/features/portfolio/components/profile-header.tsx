@@ -1,5 +1,6 @@
 import { USER } from "@/features/portfolio/data/user"
 
+import { ContributorLine } from "./contributor-line"
 import { FlipSentences } from "./flip-sentences"
 import { HandwrittenArrow, HandwrittenNote } from "./handwritten-note"
 import { ProfileCover } from "./profile-cover"
@@ -11,7 +12,7 @@ export function ProfileHeader() {
       <figure className="relative col-span-2 sm:col-span-1 sm:col-start-2">
         <ProfileCover />
         <HandwrittenNote
-          className="bottom-20 left-full hidden w-36 flex-col items-start pointer-fine:xl:flex"
+          className="bottom-5 left-full hidden w-36 flex-col items-start pointer-fine:xl:flex"
           aria-hidden
         >
           <HandwrittenArrow className="-scale-y-100 -rotate-6" />
@@ -60,6 +61,13 @@ export function ProfileHeader() {
               aria-hidden
             />
           </div>
+
+          {USER.contributor && (
+            <ContributorLine
+              className="border-t border-line py-1.5 pl-4"
+              {...USER.contributor}
+            />
+          )}
 
           <FlipSentences className="h-12.5 border-t border-line py-1 pl-4 sm:h-9">
             {USER.flipSentences}

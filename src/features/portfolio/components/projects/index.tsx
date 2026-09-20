@@ -42,7 +42,7 @@ export function Projects() {
         max={4}
       />
       <HandwrittenPanelNote side="left">
-        most of them still work
+        almost all of them works
       </HandwrittenPanelNote>
     </Panel>
   )

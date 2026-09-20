@@ -11,6 +11,13 @@ export type User = {
   bio: string
   /** Short phrases rotated in UI (e.g., homepage flip effect) */
   flipSentences: string[]
+  /** Shown under the name: "<label> @handle, @handle and others". */
+  contributor?: {
+    label: string
+    orgs: { handle: string; href: string }[]
+    /** Append "and others" after the listed orgs. */
+    andOthers?: boolean
+  }
   /** General location for display */
   address: string
   /** base64 encoded (https://t.io.vn/base64-string-converter) */

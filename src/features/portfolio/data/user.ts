@@ -14,6 +14,14 @@ export const USER: User = {
     "Shipping on Solana.",
     "Also known as Ghost.",
   ],
+  contributor: {
+    label: "Core Contributor",
+    orgs: [
+      { handle: "solanaRPC", href: "https://github.com/solana-rpc/superbank" },
+      { handle: "solanaFnd", href: "https://github.com/solana-foundation" },
+    ],
+    andOthers: true,
+  },
   address: "Bengaluru, India",
   emailB64: "Z2FtYW5kZWVwc2luZ2g2QGdtYWlsLmNvbQ==", // base64 encoded
   website: "https://gamandeep.xyz",
