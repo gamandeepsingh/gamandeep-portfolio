@@ -288,6 +288,13 @@
   /* color-mix */
   --line: color-mix(in oklab, var(--border) 64%, var(--background));
 
+  /* GitHub contribution levels, light scheme. Level 0 follows the site's own
+     muted token so empty days sit quietly in the page. */
+  --contribution-1: #9be9a8;
+  --contribution-2: #40c463;
+  --contribution-3: #30a14e;
+  --contribution-4: #216e39;
+
   /* zinc-200 */
   --input: oklch(0.92 0.004 286.32);
 
@@ -433,6 +440,12 @@
   --border: oklch(0.274 0.006 286.033);
 
   /* --line: color-mix(in oklab, var(--border) 64%, var(--background)); */
+
+  /* GitHub contribution levels, dark scheme. */
+  --contribution-1: #0e4429;
+  --contribution-2: #006d32;
+  --contribution-3: #26a641;
+  --contribution-4: #39d353;
 
   --input: lab(100% 0 0 / 0.15);
 

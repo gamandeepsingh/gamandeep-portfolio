@@ -74,12 +74,17 @@ const DEFAULT_LABELS: Labels = {
   },
 }
 
+/**
+ * GitHub's own contribution greens (see `--contribution-*` in globals.css,
+ * which carries a set per color scheme). Level 0 stays on the site's muted
+ * token so empty days read as part of the page rather than as data.
+ */
 const THEME = cn(
   'data-[level="0"]:fill-muted-foreground/5',
-  'data-[level="1"]:fill-muted-foreground/20',
-  'data-[level="2"]:fill-muted-foreground/40',
-  'data-[level="3"]:fill-muted-foreground/60',
-  'data-[level="4"]:fill-muted-foreground/80'
+  'data-[level="1"]:fill-(--contribution-1)',
+  'data-[level="2"]:fill-(--contribution-2)',
+  'data-[level="3"]:fill-(--contribution-3)',
+  'data-[level="4"]:fill-(--contribution-4)'
 )
 
 type ContributionGraphContextType = {

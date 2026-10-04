@@ -28,20 +28,20 @@ export const USER: User = {
   jobTitle: "Full Stack Engineer",
   jobs: [
     {
-      title: "Full Stack Engineer",
+      title: "Software Engineer",
       company: "GPU.Net",
       website: "https://gpu.net",
       experienceId: "gpunet",
     },
     {
-      title: "Core Lead",
+      title: "ex Core Tech Lead",
       company: "INNOGEEKS",
       website: "https://innogeeks.in",
     },
   ],
   about: `- I’m Gamandeep Singh (aka Ghost) — a Full Stack Developer with a focus on Web3, building scalable, event-driven backends and real-time systems with Node.js, Rust, and Solana.
 - Currently solving complex problems at [GPU.Net](https://gpu.net), and a selected Builder in the [Solana Turbine](https://turbin3.org) Q2 2026 cohort.
-- Core Lead at [INNOGEEKS](https://innogeeks.in), leading 250+ members and organizing INNOHACKS 2.0 & NASA Space Apps hackathons.
+- Core Tech Lead at [INNOGEEKS](https://innogeeks.in), leading 250+ members and organizing INNOHACKS 2.0 & NASA Space Apps hackathons.
 - Creator of [SOLAI Wallet](https://solai.website), [solana-pay-widget](https://www.npmjs.com/package/solana-pay-widget) (npm), and [QuickCache](https://crates.io/crates/quickcache) (Rust crate).
 `,
   avatar: "/images/avatar.png",

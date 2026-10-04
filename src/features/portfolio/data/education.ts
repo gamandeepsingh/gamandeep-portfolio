@@ -27,7 +27,7 @@ export const EDUCATION: Education[] = [
     },
     description: `- Affiliated to Dr. A.P.J. Abdul Kalam Technical University (AKTU), Delhi NCR.
 - CGPA: 9 / 10 — ranked 1st academically since the first year.
-- Core Lead at [INNOGEEKS](https://innogeeks.in), handling all tech-related activities for a 250+ member community.
+- Core Tech Lead at [INNOGEEKS](https://innogeeks.in), handling all tech-related activities for a 250+ member community.
 - Led the team organizing INNOHACKS 2.0 and the NASA Space Apps Challenge hackathons.
 - Top 6 at Smart India Hackathon 2024; Top 50 of 4000+ teams at Google Solution Challenge 2023.`,
     skills: [
