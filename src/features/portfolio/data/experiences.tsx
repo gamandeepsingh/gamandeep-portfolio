@@ -13,7 +13,7 @@ export const EXPERIENCES: Experience[] = [
     positions: [
       {
         id: "1",
-        title: "Full Stack Engineer",
+        title: "Software Engineer",
         employmentPeriod: {
           start: "10.2025",
         },
@@ -125,12 +125,12 @@ export const EXPERIENCES: Experience[] = [
     positions: [
       {
         id: "1",
-        title: "SDE Intern",
+        title: "SDE",
         employmentPeriod: {
-          start: "07.2024",
+          start: "06.2023",
           end: "09.2025",
         },
-        employmentType: "Internship",
+        employmentType: "Full-time",
         icon: <CodeXmlIcon />,
         description: `- Built full stack systems for 10+ SaaS applications using Node.js, MongoDB, Postgres, and React/Next.js.
 - Designed database schemas and REST APIs for production systems.
@@ -157,12 +157,12 @@ export const EXPERIENCES: Experience[] = [
     positions: [
       {
         id: "1",
-        title: "Backend Intern",
+        title: "Backend Developer",
         employmentPeriod: {
           start: "01.2024",
           end: "05.2024",
         },
-        employmentType: "Internship",
+        employmentType: "part-time",
         icon: <ServerIcon />,
         description: `- Developed backend services for an edtech platform using Node.js, MongoDB, and PostgreSQL.
 - Designed and implemented REST APIs for course management, user authentication, and payment processing.`,
